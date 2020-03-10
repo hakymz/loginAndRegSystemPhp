@@ -1,0 +1,97 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: rgb(136, 123, 255);
+  padding: 50px 20px;
+}
+
+.input {
+  padding: 15px;
+  margin: 10px;
+  background: white;
+  border: none;
+}
+
+.btn {
+  width: 150px;
+  margin: 10px;
+  padding: 10px;
+  background: rgb(99, 238, 152);
+  border: none;
+  cursor: pointer;
+}
+
+.form h1 {
+  color: white;
+}
+
+.error {
+  padding: 7px;
+  width: 100%;
+  background: rgb(255, 111, 111);
+  text-align: center;
+  font-size: 12px;
+  margin: 10px;
+  color: white;
+}
+
+.success {
+  padding: 7px;
+  width: 100%;
+  background: rgb(126, 255, 165);
+  text-align: center;
+  font-size: 12px;
+  margin: 5px;
+  color: white;
+}
+
+.form a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.dashbord {
+  position: relative;
+  height: 300px;
+  width: 500px;
+  background-color: rgb(126, 255, 165);
+}
+
+.dashbord h1 {
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
+.dashbord p {
+  color: black;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.btn-lg {
+  position: absolute;
+  padding: 15px 20px;
+  text-decoration: none;
+  text-align: center;
+  background: white;
+  margin: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
