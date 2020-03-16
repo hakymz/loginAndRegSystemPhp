@@ -3,48 +3,47 @@ require_once "header.php";
 if(isset($_SESSION["id"])){
 header("Location:index.php");
 }
+ if(isset($_POST["submit"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
+    $username = mysqli_escape_string($connect,$_POST["username"]);
+    $password= mysqli_escape_string($connect,$_POST["password"]);
+    $error = "";
+    $success = "";
+    if(empty($username)){
+    $error = "Please Input Username";
 
-if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
-$username = mysqli_escape_string($connect,$_POST["username"]);
-$password= mysqli_escape_string($connect,$_POST["password"]);
-$error = "";
-$success = "";
+    }else if(empty($password)){
+    $error = "Please Input Password";
 
-if(empty($username)){
-$error = "Please Input Username";
-
-}else if(empty($password)){
-$error = "Please Input Password";
-
-}else{
-$query = mysqli_query($connect,"SELECT * FROM users WHERE username='$username'");
-
-if(mysqli_num_rows($query) > 0){
-$row = mysqli_fetch_assoc($query);
-$id = $row["id"];
-$dbPassword = $row["password"];
-
-if(!password_verify($password,$dbPassword)){
-$error = "Invalid password please try again";
-
-}else{
-$success = "Success Login....";
-$_SESSION["id"] = $id;
-//redirect to login page
-header("Refresh:2;url=index.php");
+    }else{
+    $query = mysqli_query($connect,"SELECT * FROM users WHERE username='$username'");  
+    if(mysqli_num_rows($query) > 0){
+    $row = mysqli_fetch_assoc($query);
+    $id = $row["id"];
+    $passwordHash = $row["password"];
+    if(password_verify($password,$passwordHash) == false){
+    $error =  "Invalid password please try again";
+        
+    }else{
+    $success = "Success Login...";   
+  
+    $_SESSION["id"] = $id;
+    //redirect to index page;
+    header("Refresh:2;url=index.php");
+    }
 
 
-}
+    }else{
+    $error ="User does not exist please try again.";
+    }  
+    }
 
-}else{
-$error = "User not Found";  
-}
-}
- 
 
-}
+
+ }
+
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -55,24 +54,21 @@ $error = "User not Found";
     <title>Document</title>
 </head>
 <body>
-    <form action="login.php" method="POST" class="form">
+    <form  class="form" action="login.php" method="POST">
     <h1>LOGIN</h1>
     <?php
     if(!empty($error)){
-    echo "<span class='error'>$error</span>";
+    echo "<div class='error'>$error</div>";
     }
     if(!empty($success)){
-    echo "<span class='success'>$success</span>";
+    echo "<div class='success'>$success</div>";
     }
     
-    
     ?>
-
- 
     <input type="text" name="username" placeholder="Username" class="input">
-    <input type="password" name="password" placeholder="Password" class="input">
+     <input type="password" name="password"  placeholder="Password" class="input">
     <input type="submit" name="submit" value="Login" class="btn">
-    <a href="reg.php">Create An Account</a>
+    <a href="reg.php">Register An Account</a>
     </form>
 </body>
 </html>

@@ -1,31 +1,33 @@
 <?php
-require_once("header.php");
-if(!isset($_SESSION["id"])){
+require_once "header.php";
+
+if(isset($_GET["action"]) && $_GET["action"]== "logout" && $_SERVER["REQUEST_METHOD"] == "GET"){
+session_destroy();
 header("Location:login.php");
 
+}
+
+if(!isset($_SESSION["id"])){
+header("Location:login.php");
 }else{
 $id = $_SESSION["id"];
 $query = mysqli_query($connect,"SELECT * FROM users WHERE id=$id");
-if(mysqli_num_rows($query) < 1){
+if(mysqli_num_rows($query) == 0){
 header("Location:login.php");
-session_destroy();
 
-}else{
+}else if(mysqli_num_rows($query) > 0){
 $row = mysqli_fetch_assoc($query);
-$username =$row["username"];
-$email=$row["email"];
+$username = $row["username"];
+$email= $row["email"];
 
 }
 }
 
-if(isset($_GET["action"]) && $_GET["action"] == "logout"){
-session_destroy();
-header("Location:login.php");
 
 
-}
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +41,7 @@ header("Location:login.php");
     
     <div class="dashbord">
     <?php
-    echo "<h1>WELCOME $username</h1>
+    echo "<h1>WELCOME $username </h1>
     <p>Username:$username</p>
     <p>Email:$email</p>
     
